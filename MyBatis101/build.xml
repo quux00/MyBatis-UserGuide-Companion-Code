@@ -1,0 +1,65 @@
+<project name="MyBatis101" default="run" basedir=".">
+  <!-- Template based on: http://sourceforge.net/apps/mediawiki/import-ant/index.php?title=Snippets -->
+  <description>Build script for simple MyBatis101 app</description>
+
+  <!-- load environment variables as properties -->
+  <property environment="env"/>
+
+  <!-- default folder location properties -->
+  <property name="src.dir" value="src"/>
+  <property name="build.dir" value="bin"/>
+  <!-- TODO: EDIT THIS -->
+  <property name="lib.dir" value="/home/midpeter444/java/lib"/> 
+
+  <!-- project classpath -->
+
+  <path id="project.classpath">
+    <!-- compiled classes -->
+    <pathelement location="${build.dir}" />
+    <!-- libraries -->
+    <fileset dir="${lib.dir}">
+      <include name="postgresql.jar" />  <!-- TODO: EDIT THIS -->
+      <include name="mybatis.jar" />     <!-- TODO: EDIT THIS -->
+    </fileset>
+  </path>
+
+  <!-- basic -->
+
+  <target name="init">
+    <mkdir dir="${build.dir}"/>
+  </target>
+
+  <!-- compile -->
+
+  <target name="prepare-resources" depends="init">
+    <copy todir="${build.dir}" overwrite="true">
+      <fileset dir="${src.dir}" includes="**/*.xml" />
+    </copy>
+  </target>
+
+  <target name="compile" depends="init,prepare-resources"
+          description="Compile java classes">
+    <javac
+        srcdir="${src.dir}"
+        destdir="${build.dir}"
+        includeantruntime="false"> <!-- to overcome misfeature in Ant 1.8 -->
+      <classpath refid="project.classpath" />
+    </javac>
+  </target>
+  
+  
+  <!-- run on console -->
+
+  <property name="run.main-class" value="mybatis101.Main"/>
+  <property name="run.args" value=""/>
+
+  <target name="run" depends="compile"
+          description="Run MyBatis101 program">
+    <java classname="${run.main-class}" fork="true">
+      <arg line="${run.args}" />
+      <classpath>
+        <path refid="project.classpath" />
+      </classpath>
+    </java>
+  </target>
+</project>
