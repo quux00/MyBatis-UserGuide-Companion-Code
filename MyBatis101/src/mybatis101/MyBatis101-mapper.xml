@@ -5,8 +5,8 @@
 
 <mapper namespace="mybatis101.Mapper">
 
-	<select id="getUser" resultType="mybatis101.User">
-		select * from users
+	<select id="getUser" parameterType="int" resultType="mybatis101.User">
+		select * from users where id = #{id}
 	</select>
 
 </mapper>

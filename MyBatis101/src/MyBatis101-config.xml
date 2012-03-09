@@ -9,10 +9,10 @@
     <environment id="development">
       <transactionManager type="JDBC"/>
       <dataSource type="UNPOOLED">
-        <property name="driver" value="org.postgresql.Driver" />
-        <property name="url" value="jdbc:postgresql:MyBatis101" />
-        <property name="username" value="midpeter444" />
-        <property name="password" value="jiffylube" />
+        <property name="driver" value="org.postgresql.Driver" />   <!-- TODO: CHANGE -->
+        <property name="url" value="jdbc:postgresql:MyBatis101" /> <!-- TODO: CHANGE -->
+        <property name="username" value="midpeter444" /> <!-- TODO: CHANGE -->
+        <property name="password" value="jiffylube" />   <!-- TODO: CHANGE -->
       </dataSource>
     </environment>
   </environments>
