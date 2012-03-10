@@ -8,6 +8,11 @@
     <property name="password" value="jiffylube" />    <!-- TODO: FILL IN -->
   </properties>
 
+  <typeAliases>
+  	<typeAlias type="org.mybatis.example.Author" alias="Author" />
+	 <typeAlias type="org.mybatis.example.Blog" alias="Blog" />
+  </typeAliases>
+
 	<environments default="development">
 		<environment id="development">
 			<transactionManager type="JDBC" />
@@ -20,6 +25,7 @@
 		</environment>
 	</environments>
 	<mappers>
-		<mapper resource="org/mybatis/example/BlogMapper.xml" />
+    <mapper resource="org/mybatis/example/BlogMapper.xml" />
+    <mapper resource="org/mybatis/example/AuthorMapper.xml" />
 	</mappers>
 </configuration>

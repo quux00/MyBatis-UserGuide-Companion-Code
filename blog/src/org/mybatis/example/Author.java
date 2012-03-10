@@ -37,5 +37,11 @@ public class Author {
 	public void setBio(String bio) {
 		this.bio = bio;
 	}
-	
+
+	@Override
+	public String toString() {
+		return String.format("[Author: id=%d; username=%s; email=%s; bio=%s]",
+				id, username, email, bio);
+	}
 }
+

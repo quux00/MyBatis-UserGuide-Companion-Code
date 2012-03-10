@@ -1,6 +1,7 @@
 package org.mybatis.example;
 
 import java.io.Reader;
+import java.util.Random;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -19,19 +20,66 @@ public class Main {
 	}
 
 	public static void lookUpAuthorOldWay() {
+		Author au = retrieveAuthorById(1);
+		System.out.println(au);
+	}
+
+	private static Author retrieveAuthorById(Integer id) {
 		SqlSession session = sqlSessionFactory.openSession();
 		try {
-			Author a = (Author) session.selectOne(arg0);
+			return (Author) session.selectOne(
+					         "org.mybatis.example.AuthorMapper.getAuthor", 
+          		             id);
 		} finally {
 			session.close();
 		}
+	}
+	
+	private static Author createAuthor() {
+		Random r = new Random();
+		Author a = new Author();
+		a.setUsername("foo" + r.nextInt(9999999));
+		a.setHashedPassword("pass" + r.nextInt());
+		a.setEmail(String.format("foo.%d@pobox.com", r.nextInt(6666)));
+		//a.setBio("I voted for Pedro");
+		return a;
+	}
+	
+	public static void insertAuthor() {
+		Author newAuthor = createAuthor();
+		
+		SqlSession session = sqlSessionFactory.openSession();
+
+		try {
+			int rt = session.insert("org.mybatis.example.AuthorMapper.insertAuthor", newAuthor);
+			if (rt == 0) {
+				System.out.println("Insert into Author failed");
+			}
+			session.commit();
+		} finally {
+			session.close();
+		}
+		System.out.println(newAuthor.getId());
+		Author a = retrieveAuthorById(newAuthor.getId());
+		System.out.println(a.getUsername().equals(newAuthor.getUsername()));
 	}
 	
 	public static void lookUpBlogOldWay() {
 		SqlSession session = sqlSessionFactory.openSession();
 		try {
 			Blog blog = (Blog) session.selectOne(
-					"org.mybatis.example.BlogMapper.selectBlog", 101);
+					"org.mybatis.example.BlogMapper.selectBlog", 1);
+			System.out.println(blog);
+		} finally {
+			session.close();
+		}
+	}
+
+	public static void lookUpBlogWithAuthorOldWay() {
+		SqlSession session = sqlSessionFactory.openSession();
+		try {
+			Blog blog = (Blog) session.selectOne(
+					"org.mybatis.example.BlogMapper.selectBlogWithAuthor", 1);
 			System.out.println(blog);
 		} finally {
 			session.close();
@@ -42,20 +90,31 @@ public class Main {
 		SqlSession session = sqlSessionFactory.openSession();
 		try {
 			BlogMapper mapper = session.getMapper(BlogMapper.class);
-			System.out.println(mapper.getClass());
-			Blog blog = mapper.selectBlog(101);
+			Blog blog = mapper.selectBlog(2);
 			System.out.println(blog);
 		} finally {
 			session.close();
 		}
-
+	}
+	public static void lookUpBlogWithAuthor() {
+		SqlSession session = sqlSessionFactory.openSession();
+		try {
+			BlogMapper mapper = session.getMapper(BlogMapper.class);
+			Blog blog = mapper.selectBlogWithAuthor(2);
+			System.out.println(blog);
+		} finally {
+			session.close();
+		}
 	}
 
 	public static void main(String[] args) throws Exception {
 		initSessionFactory();
 		lookUpAuthorOldWay();
-//		lookUpBlogOldWay();
-//		lookUpBlog();
+		lookUpBlogOldWay();
+		lookUpBlogWithAuthorOldWay();
+		lookUpBlog();
+		lookUpBlogWithAuthor();
+		insertAuthor();
 		System.out.println("EOP");
 	}
 }

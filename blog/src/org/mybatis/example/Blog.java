@@ -26,7 +26,7 @@ public class Blog {
 
 	@Override
 	public String toString() {
-		return String.format("[Blog: id=%d, title=%s]", id, title);
+		return String.format("[Blog: id=%d, title=%s, author=%12s]", id, title, author);
 	}
 	
 }

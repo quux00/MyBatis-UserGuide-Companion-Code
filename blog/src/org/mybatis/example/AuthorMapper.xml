@@ -5,8 +5,14 @@
 
 <mapper namespace="org.mybatis.example.AuthorMapper">
 
-  <select id="getUser" resultType="org.mybatis.example.Author">
-    select * from users
+  <select id="getAuthor" parameterType="int" resultType="Author">
+    select * from author where id = #{id}
   </select>
 
+  <insert id="insertAuthor" parameterType="org.mybatis.example.Author"
+            useGeneratedKeys="true" keyProperty="id">
+    insert into author (username, hashed_password, email, bio) 
+    values (#{username}, #{hashedPassword}, #{email}, #{bio,jdbcType=VARCHAR})
+  </insert>
+  
 </mapper>
