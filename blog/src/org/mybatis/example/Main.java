@@ -20,6 +20,8 @@ public class Main {
 	}
 
 	public static void lookUpAuthorOldWay() {
+		System.out.println("/* ---[ lookUpAuthorOldWay ]--- */");
+
 		Author au = retrieveAuthorById(1);
 		System.out.println(au);
 	}
@@ -46,25 +48,27 @@ public class Main {
 	}
 	
 	public static void insertAuthor() {
+		System.out.println("/* ---[ insertAuthor ]--- */");
+
 		Author newAuthor = createAuthor();
-		
 		SqlSession session = sqlSessionFactory.openSession();
 
 		try {
 			int rt = session.insert("org.mybatis.example.AuthorMapper.insertAuthor", newAuthor);
 			if (rt == 0) {
-				System.out.println("Insert into Author failed");
+				System.err.println("Insert into Author failed");
 			}
 			session.commit();
 		} finally {
 			session.close();
 		}
-		System.out.println(newAuthor.getId());
 		Author a = retrieveAuthorById(newAuthor.getId());
 		System.out.println(a.getUsername().equals(newAuthor.getUsername()));
 	}
 	
 	public static void lookUpBlogOldWay() {
+		System.out.println("/* ---[ lookUpBlogOldWay ]--- */");
+		
 		SqlSession session = sqlSessionFactory.openSession();
 		try {
 			Blog blog = (Blog) session.selectOne(
@@ -76,6 +80,7 @@ public class Main {
 	}
 
 	public static void lookUpBlogWithAuthorOldWay() {
+		System.out.println("/* ---[ lookUpBlogWithAuthorOldWay ]--- */");
 		SqlSession session = sqlSessionFactory.openSession();
 		try {
 			Blog blog = (Blog) session.selectOne(
@@ -87,6 +92,8 @@ public class Main {
 	}
 
 	public static void lookUpBlog() {
+		System.out.println("/* ---[ lookUpBlog ]--- */");
+
 		SqlSession session = sqlSessionFactory.openSession();
 		try {
 			BlogMapper mapper = session.getMapper(BlogMapper.class);
@@ -96,7 +103,23 @@ public class Main {
 			session.close();
 		}
 	}
+	
+	public static void lookUpBlogWithAnnotations() {
+		System.out.println("/* ---[ lookUpBlogWithAnnotations]--- */");
+
+		SqlSession session = sqlSessionFactory.openSession();
+		try {
+			BlogMapper mapper = session.getMapper(BlogMapper.class);
+			Blog blog = mapper.selectBlogWithAnnotations(1);
+			System.out.println(blog);
+		} finally {
+			session.close();
+		}
+	}
+	
 	public static void lookUpBlogWithAuthor() {
+		System.out.println("/* ---[ lookUpBlogWithAuthor ]--- */");
+		
 		SqlSession session = sqlSessionFactory.openSession();
 		try {
 			BlogMapper mapper = session.getMapper(BlogMapper.class);
@@ -107,6 +130,10 @@ public class Main {
 		}
 	}
 
+	/**
+	 * Exercises a few basic methods for lookups and inserts for Author and Blog 
+	 * objects/tables/queries
+	 */
 	public static void main(String[] args) throws Exception {
 		initSessionFactory();
 		lookUpAuthorOldWay();
@@ -114,6 +141,7 @@ public class Main {
 		lookUpBlogWithAuthorOldWay();
 		lookUpBlog();
 		lookUpBlogWithAuthor();
+		lookUpBlogWithAnnotations();
 		insertAuthor();
 		System.out.println("EOP");
 	}
