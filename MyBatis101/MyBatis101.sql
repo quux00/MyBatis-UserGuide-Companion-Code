@@ -1,3 +1,5 @@
+-- this file works on both MySQL and PostgreSQL
+-- tested on MySQL 5.1 and PostgreSQL 9.1
 drop table if exists users;
 
 create table users (
