@@ -9,8 +9,8 @@
   </properties>
 
   <typeAliases>
-  	<typeAlias type="org.mybatis.example.Author" alias="Author" />
-	 <typeAlias type="org.mybatis.example.Blog" alias="Blog" />
+    <typeAlias type="org.mybatis.example.Author" alias="Author" />
+    <typeAlias type="org.mybatis.example.Blog" alias="Blog" />
   </typeAliases>
 
 	<environments default="development">
