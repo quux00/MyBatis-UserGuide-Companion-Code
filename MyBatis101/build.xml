@@ -11,6 +11,7 @@
   <!-- TODO: EDIT THESE -->
   <property name="lib.dir" value="/home/midpeter444/java/lib"/> 
   <property name="jdbc.jar" value="postgresql.jar"/>
+  <!-- <property name="jdbc.jar" value="mysql-connector-java.jar"/> -->
   
   <!-- project classpath -->
 

@@ -4,8 +4,8 @@
           "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
   <properties resource="org/mybatis/example/config.properties">
-    <property name="username" value="midpeter444" />  <!-- TODO: FILL IN -->
-    <property name="password" value="jiffylube" />    <!-- TODO: FILL IN -->
+    <property name="username" value="" />   <!-- TODO: FILL IN -->
+    <property name="password" value="" />   <!-- TODO: FILL IN -->
   </properties>
 
   <typeAliases>

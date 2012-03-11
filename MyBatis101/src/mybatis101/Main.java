@@ -17,6 +17,7 @@ public class Main {
 		rdr.close();
 	}
 
+	// uses the old iBATIS style of lookup
 	public static void lookUpUserOldWay() throws Exception {
 		SqlSession session = sessionFactory.openSession();
 		try {
@@ -28,6 +29,7 @@ public class Main {
 		}
 	}
 
+	// uses the new MyBatis style of lookup
 	public static void lookUpUser() throws Exception {
 		SqlSession session = sessionFactory.openSession();
 
