@@ -14,7 +14,8 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE blog (
   id          integer NOT NULL AUTO_INCREMENT PRIMARY KEY,
   title       varchar(255) NOT NULL CHECK (title <> ''),
-  author_id   integer NOT NULL references author(id)
+  author_id   integer NOT NULL,
+  FOREIGN KEY (author_id) REFERENCES author(id)
 )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
